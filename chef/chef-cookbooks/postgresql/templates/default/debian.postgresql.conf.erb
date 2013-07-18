@@ -1,0 +1,18 @@
+data_directory = '/var/lib/postgresql/<%= node.postgresql.version -%>/main'
+hba_file = '/etc/postgresql/<%= node.postgresql.version -%>/main/pg_hba.conf'
+ident_file = '/etc/postgresql/<%= node.postgresql.version -%>/main/pg_ident.conf'
+external_pid_file = '/var/run/postgresql/<%= node.postgresql.version -%>-main.pid'
+port = 5432
+max_connections = 100
+unix_socket_directory = '/var/run/postgresql'
+<% if node.postgresql.ssl -%>
+ssl = true
+<% else -%>
+<% end -%>
+shared_buffers = 24MB
+<% if node['postgresql']['version'].to_f < 8.4 -%>
+max_fsm_pages = 153600
+<% end -%>
+log_line_prefix = '%t '
+datestyle = 'iso, mdy'
+default_text_search_config = 'pg_catalog.english'
